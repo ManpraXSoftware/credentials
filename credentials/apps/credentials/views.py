@@ -113,8 +113,11 @@ class RenderCredential(SocialMediaMixin, ThemeViewMixin, TemplateView):
         org_name_string = _get_org_name(organization_names, render_language)
 
         user_data = user_credential.credential.site.siteconfiguration.get_user_api_data(user_credential.username)
-
         credential_name = user_data["name"]
+        # Manprax
+        if not credential_name:
+            credential_name = user_data["username"]
+
         if user_data.get("use_verified_name_for_certs"):
             credential_name = user_data["verified_name"]
 

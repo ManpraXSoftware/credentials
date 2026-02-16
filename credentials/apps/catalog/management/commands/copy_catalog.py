@@ -8,7 +8,7 @@ from django.core.management import BaseCommand
 
 from credentials.apps.catalog.utils import CatalogDataSynchronizer
 from credentials.apps.core.models import SiteConfiguration
-
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +39,15 @@ class Command(BaseCommand):
         page_size = options.get("page_size")
         delete_data = options.get("delete_data")
 
-        for site in Site.objects.all():
+        mx_site_id = getattr(settings, 'MX_SITE_ID', None)
+
+        if mx_site_id:
+            sites = Site.objects.filter(id=mx_site_id)
+        else:
+            sites = Site.objects.all()      
+
+        # for site in Site.objects.all():
+        for site in sites:
             site_configs = SiteConfiguration.objects.filter(site=site)
             site_config = site_configs.get() if site_configs.exists() else None
 

@@ -2,6 +2,7 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from credentials.apps.api.v2 import views
+from credentials.apps.api.v2.mx_subodha import get_program_certificate_detail
 
 
 # NOTE: Although this is v2 and other APIs in this application are v1,
@@ -9,7 +10,10 @@ from credentials.apps.api.v2 import views
 # endpoints, per:
 # https://openedx.atlassian.net/wiki/spaces/AC/pages/18350757/edX+REST+API+Conventions
 
-urlpatterns = [path("replace_usernames/", views.UsernameReplacementView.as_view(), name="replace_usernames")]
+urlpatterns = [
+    path("replace_usernames/", views.UsernameReplacementView.as_view(), name="replace_usernames"),
+    path("get-program-certificate-detail/", get_program_certificate_detail, name="get-program-certificate-detail"),
+    ]
 
 router = DefaultRouter()
 # URLs can not have hyphen as it is not currently supported by slumber
@@ -18,3 +22,5 @@ router.register(r"credentials", views.CredentialViewSet, basename="credentials")
 router.register(r"grades", views.GradeViewSet, basename="grades")
 router.register(r"course_certificates", views.CourseCertificateViewSet, basename="course_certificates")
 urlpatterns += router.urls
+
+

@@ -83,7 +83,9 @@ class CourseCertificateAdmin(TimeStampedModelAdminMixin, admin.ModelAdmin):
     readonly_fields = ("certificate_available_date",)
     autocomplete_fields = ("course_run",)
     search_fields = ("course_id",)
-
+    
+    def has_add_permission(self, request):
+        return False
 
 @admin.register(ProgramCertificate)
 class ProgramCertificateAdmin(TimeStampedModelAdminMixin, admin.ModelAdmin):

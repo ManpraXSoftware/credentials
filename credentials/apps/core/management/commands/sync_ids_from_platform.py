@@ -85,6 +85,8 @@ class Command(BaseCommand):
         # create a comma separated string with the usernames
         query_param_names = ",".join(user.username for user in users)
         user_url = urljoin(site_configs.user_api_url, f"accounts?username={query_param_names}")
+        # user_url = urljoin('https://34989982323f.ngrok-free.app', f"accounts?username={query_param_names}")
+        
         user_response = site_configs.api_client.get(user_url)
         if 200 == user_response.status_code:
             user_data = user_response.json()
