@@ -2,6 +2,12 @@ import logging
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from credentials.apps.credentials.models import UserCredential, ProgramCertificate, Program
+from threading import Thread
+import time
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.urls import reverse
+from django.core.management import call_command
 
 log = logging.getLogger(__name__)
 
@@ -62,3 +68,4 @@ def get_program_certificate_detail(request):
     except Exception as exc:
         log.exception("Error fetching program certificate")
         return JsonResponse({"error": "Internal server error"}, status=500)
+ 

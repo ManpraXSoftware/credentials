@@ -11,7 +11,12 @@ from credentials.apps.credentials.models import (
     UserCredentialAttribute,
     UserCredentialDateOverride,
 )
-
+from django.urls import path
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+from threading import Thread
+import time
+from django.core.management import call_command
 
 class TimeStampedModelAdminMixin:
     readonly_fields = (
@@ -102,6 +107,36 @@ class ProgramCertificateAdmin(TimeStampedModelAdminMixin, admin.ModelAdmin):
         queryset, use_distinct = super().get_search_results(request, queryset, search_term.replace("-", ""))
 
         return queryset, use_distinct
+    # Manprax 
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                'sync-catalog/',
+                self.admin_site.admin_view(self.sync_catalog_view),
+                name='admin_sync_catalog',
+            ),
+        ]
+        return custom_urls + urls
+
+    def sync_catalog_view(self, request):
+        def run_sync():
+            try:
+                call_command("copy_catalog", verbosity=0)
+                print("copy_catalog completed successfully")  # in docker logs
+            except Exception as e:
+                print(f"copy_catalog failed: {str(e)}")
+
+        Thread(target=run_sync, daemon=True).start()
+        time.sleep(1.5)
+
+        messages.info(
+            request,
+            "Catalog sync (copy_catalog) started in background. "
+            "Check logs: tutor local logs credentials -f"
+        )
+
+        return HttpResponseRedirect('../')
 
 
 @admin.register(Signatory)
