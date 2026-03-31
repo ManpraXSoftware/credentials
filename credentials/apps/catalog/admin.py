@@ -14,6 +14,9 @@ class CourseAdmin(admin.ModelAdmin):
     list_filter = ("site",)
     readonly_fields = ("id", "key", "uuid", "title", "owners", "site")
     search_fields = ("id", "key", "title", "uuid")
+    # Manprax
+    def has_add_permission(self, request):
+        return False
 
 
 @admin.register(CourseRun)
@@ -21,6 +24,9 @@ class CourseRunAdmin(admin.ModelAdmin):
     list_display = ("id", "key", "uuid", "title_override", "start_date", "end_date")
     readonly_fields = ("id", "key", "uuid", "title_override", "start_date", "end_date", "course")
     search_fields = ("id", "key", "title_override", "uuid", "course__title")
+    # Manprax
+    def has_add_permission(self, request):
+        return False
 
 @admin.register(Program)
 class ProgramAdmin(admin.ModelAdmin):
@@ -69,7 +75,9 @@ class ProgramAdmin(admin.ModelAdmin):
         )
 
         return HttpResponseRedirect('../')
-
+    
+    def has_add_permission(self, request):
+        return False
 
 @admin.register(Pathway)
 class PathwayAdmin(admin.ModelAdmin):
@@ -85,3 +93,6 @@ class OrganizationAdmin(admin.ModelAdmin):
     list_filter = ("site",)
     readonly_fields = ("name", "key", "uuid", "site", "certificate_logo_image_url")
     search_fields = ("name", "key", "uuid")
+    # Manprax
+    def has_add_permission(self, request):
+        return False

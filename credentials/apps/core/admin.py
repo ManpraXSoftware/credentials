@@ -127,6 +127,9 @@ class CustomUserAdmin(ChangeUserStatusAdminMixin, UserAdmin):
         (_("Permissions"), {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
+    # Manprax
+    def has_add_permission(self, request):
+        return False
 
 
 @admin.register(SiteConfiguration)
