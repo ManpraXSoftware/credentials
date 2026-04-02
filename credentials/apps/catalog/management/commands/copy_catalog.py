@@ -37,7 +37,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         page_size = options.get("page_size")
-        delete_data = options.get("delete_data")
+        # delete_data = options.get("delete_data")
+        delete_data = True
 
         mx_site_id = getattr(settings, 'MX_SITE_ID', None)
 
