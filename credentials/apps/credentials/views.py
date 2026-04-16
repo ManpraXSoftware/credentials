@@ -186,7 +186,9 @@ class RenderCredential(SocialMediaMixin, ThemeViewMixin, TemplateView):
                 "render_language": render_language,
                 "issue_date": visible_date,
                 # NOTE: In the future this can be set to the course_name and/or seat type
-                "page_title": program_details.type,
+                # Manprax
+                # "page_title": program_details.type,
+                "page_title": f"{program_details.title} Program Certificate | Subodha" ,
                 # NOTE: In the future this can be set to the course_name
                 "program_name": program_details.title,
                 "credential_title": program_details.credential_title,
