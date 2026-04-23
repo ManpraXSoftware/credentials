@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from credentials.apps.api.v2 import views
-from credentials.apps.api.v2.mx_subodha import get_program_certificate_detail
+from credentials.apps.api.v2.mx_subodha import get_program_certificate_detail, get_program_certificate_from_uuid
 
 
 # NOTE: Although this is v2 and other APIs in this application are v1,
@@ -13,6 +13,7 @@ from credentials.apps.api.v2.mx_subodha import get_program_certificate_detail
 urlpatterns = [
     path("replace_usernames/", views.UsernameReplacementView.as_view(), name="replace_usernames"),
     path("get-program-certificate-detail/", get_program_certificate_detail, name="get-program-certificate-detail"),
+    path("get-program-certificate-from-uuid/", get_program_certificate_from_uuid, name="get-program-certificate-from-uuid"),
     ]
 
 router = DefaultRouter()
