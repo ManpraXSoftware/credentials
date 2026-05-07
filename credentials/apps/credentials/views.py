@@ -120,7 +120,7 @@ class RenderCredential(SocialMediaMixin, ThemeViewMixin, TemplateView):
 
         if user_data.get("use_verified_name_for_certs"):
             credential_name = user_data["verified_name"]
-
+        subodha_logo = settings.SUBODHA_LOGO
         # Twitter
         if self.site_configuration.enable_twitter_sharing:
             tweet_text = _("I completed a course at {platform_name}. Take a look at my certificate:").format(
@@ -193,6 +193,8 @@ class RenderCredential(SocialMediaMixin, ThemeViewMixin, TemplateView):
                 "program_name": program_details.title,
                 "credential_title": program_details.credential_title,
                 "org_name_string": org_name_string,
+                # Manprax
+                "subodha_logo": subodha_logo
             }
         )
         if program_details.hours_of_effort:
