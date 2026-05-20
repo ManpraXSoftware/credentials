@@ -120,6 +120,8 @@ class RenderCredential(SocialMediaMixin, ThemeViewMixin, TemplateView):
 
         if user_data.get("use_verified_name_for_certs"):
             credential_name = user_data["verified_name"]
+        if credential_name and len(credential_name) > 25:
+            credential_name = credential_name[:25] + "..."
         subodha_logo = settings.SUBODHA_LOGO
         # Twitter
         if self.site_configuration.enable_twitter_sharing:
